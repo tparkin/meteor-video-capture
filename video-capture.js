@@ -205,6 +205,10 @@ _videoCapture.recordStartCordova =function(templateInst) {
     var mediaFile = mediaFiles && mediaFiles[0] || null;
     if(mediaFile) {
       templateInst.processing.set(true);
+      console.log("got mediaFile");
+      console.log(mediaFile.name);
+      console.log(mediaFile.localURL);
+      console.log(mediaFile.size);
       _videoCapture.fileToDataUrl(mediaFile, function(videoUrl) {
         templateInst.processing.set(false);
         _videoCapture.showVideo(videoUrl);
@@ -248,6 +252,7 @@ _videoCapture.recordStartBrowser =function(templateInst) {
         streamBuffer.push(evt.data);
         if( _videoCapture.state === 'stopped' ) {
           templateInst.processing.set(true);
+          console.log("got data buffer from device");
           _videoCapture.bufferToDataUrl(streamBuffer, function(videoUrl) {
             templateInst.processing.set(false);
             _videoCapture.showVideo(videoUrl);
@@ -367,6 +372,7 @@ _videoCapture.fileToDataUrl =function(file, callback) {
   // };
   // reader.readAsDataURL(file);
 
+  console.log("reading chunks to base64...");
   _videoCapture.readFileChunksToBase64(file, file.type, callback);
 };
 

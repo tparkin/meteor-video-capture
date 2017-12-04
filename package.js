@@ -1,10 +1,10 @@
 Package.describe({
-  name: 'lukemadera:video-capture',
+  name: 'tparkin:video-capture',
   version: '1.0.7',
   // Brief, one-line summary of the package.
   summary: 'Record video from user browser or device, cross platform (Web, Cordova)',
   // URL to the Git repository containing the source code for this package.
-  git: 'https://github.com/lukemadera/meteor-video-capture',
+  git: 'https://github.com/tparkin/meteor-video-capture',
   // By default, Meteor will default to using README.md for documentation.
   // To avoid submitting documentation, set this field to null.
   documentation: 'README.md'
