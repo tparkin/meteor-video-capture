@@ -1,5 +1,5 @@
 Package.describe({
-  name: 'tparkin:video-capture',
+  name: 'tparkin-video-capture',
   version: '1.0.7',
   // Brief, one-line summary of the package.
   summary: 'Record video from user browser or device, cross platform (Web, Cordova)',
