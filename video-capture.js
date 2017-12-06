@@ -213,6 +213,7 @@ _videoCapture.recordStartCordova =function(templateInst) {
       lmVideoCapture.log(mediaFile.localURL);
       lmVideoCapture.log(mediaFile.size);
       _videoCapture.fileToDataUrl(mediaFile, function(videoUrl) {
+        lmVideoCapture.log("videoUrl: " + videoUrl);
         templateInst.processing.set(false);
         _videoCapture.showVideo(videoUrl);
       });
