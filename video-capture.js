@@ -43,6 +43,10 @@ _videoCapture ={
 var recorder;
 var streamBuffer;
 
+lmVideoCapture.log = function(message) {
+  $('.lm-video-capture-log').append("<p>" + message + "</p>");
+}
+
 lmVideoCapture.recordStart =function(templateInst) {
   if(Meteor.isCordova) {
     _videoCapture.recordStartCordova(templateInst);
@@ -205,14 +209,9 @@ _videoCapture.recordStartCordova =function(templateInst) {
     var mediaFile = mediaFiles && mediaFiles[0] || null;
     if(mediaFile) {
       templateInst.processing.set(true);
-      $('#log').append("got mediaFile<br />");
-      $('#log').append(mediaFile.name + "<br />");
-      $('#log').append(mediaFile.localURL + "<br />");
-      $('#log').append(mediaFile.size + "<br />");
-      console.log("got mediaFile");
-      console.log(mediaFile.name);
-      console.log(mediaFile.localURL);
-      console.log(mediaFile.size);
+      lmVideoCapture.log("got mediaFile: " + mediaFile.name);
+      lmVideoCapture.log(mediaFile.localURL);
+      lmVideoCapture.log(mediaFile.size);
       _videoCapture.fileToDataUrl(mediaFile, function(videoUrl) {
         templateInst.processing.set(false);
         _videoCapture.showVideo(videoUrl);
@@ -222,7 +221,7 @@ _videoCapture.recordStartCordova =function(templateInst) {
 
   navigator.device.capture.captureVideo(captureSuccess, function(err) {
     lmVideoCapture.recordStop(templateInst);
-    $('#log').append(err);
+    lmVideoCapture.log("[1] " + err);
     console.error(err);
   }, constraints);
 
@@ -257,8 +256,7 @@ _videoCapture.recordStartBrowser =function(templateInst) {
         streamBuffer.push(evt.data);
         if( _videoCapture.state === 'stopped' ) {
           templateInst.processing.set(true);
-          console.log("got data buffer from device");
-          $('#log').append("got data buffer from device");
+          lmVideoCapture.log("got data buffer from device");
           _videoCapture.bufferToDataUrl(streamBuffer, function(videoUrl) {
             templateInst.processing.set(false);
             _videoCapture.showVideo(videoUrl);
@@ -279,7 +277,7 @@ _videoCapture.recordStartBrowser =function(templateInst) {
 
   })
   .catch(function(err) {
-    $('#log').append(err);
+    lmVideoCapture.log("[2] " + err);
     console.error(err);
   });
 };
@@ -337,7 +335,7 @@ _videoCapture.readFileChunksToBase64 =function(file, fileType, callback) {
   var saveChunk = function(evt) {
     if (evt.target.error) {
       console.error(evt.target.error);
-      $('#log').append(evt.target.error);
+      lmVideoCapture.log("[3] " + evt.target.error);
     }
     else {
       base64Chunks.push(evt.target.result);
@@ -380,8 +378,7 @@ _videoCapture.fileToDataUrl =function(file, callback) {
   // };
   // reader.readAsDataURL(file);
 
-  console.log("reading chunks to base64...");
-  $('#log').append("reading chunks b64...");
+  lmVideoCapture.log("reading chunks b64...");
   _videoCapture.readFileChunksToBase64(file, file.type, callback);
 };
 

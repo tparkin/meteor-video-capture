@@ -21,3 +21,11 @@
 .lm-video-capture-record-stop-btn-style {
   margin-left: 10px;
 }
+
+.lm-video-capture-log {
+  word-wrap: break-word;
+  overflow-word-wrap: break-word;
+  margin: 10px;
+  padding: 4px;
+  height: auto;
+}
