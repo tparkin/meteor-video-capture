@@ -333,6 +333,8 @@ _videoCapture.readFileChunksToBase64 =function(file, fileType, callback) {
   var blob, chunk;
   
   var saveChunk = function(evt) {
+    lmVideoCapture.log("saveChunk");
+
     if (evt.target.error) {
       console.error(evt.target.error);
       lmVideoCapture.log("[3] " + evt.target.error);
@@ -355,14 +357,23 @@ _videoCapture.readFileChunksToBase64 =function(file, fileType, callback) {
   };
 
   var readChunk = function (file) {
+    lmVideoCapture.log("readChunk");
+
     end = ( ( start + chunkSize ) >= fileSize ) ? fileSize : ( start + chunkSize );
     end =_videoCapture.calculateChunkEnd(start, chunkSize, fileSize);
     blob = file.slice(start, end, fileType);
     reader = new FileReader();
-    reader.onload =saveChunk;
+    reader.onload = saveChunk;
+    reader.onloadend = function(x) {
+      lmVideoCapture.log("reader onloadend");
+    }
+    reader.onerror = function(err) {
+      lmVideoCapture.log("reader error: " + err);
+    }
     reader.readAsDataURL(blob);
   };
 
+  lmVideoCapture.log("about to readChunk (first)");
   readChunk(file);
 };
 
