@@ -338,14 +338,17 @@ _videoCapture.readFileChunksToBase64 =function(file, fileType, callback) {
       lmVideoCapture.log("[3] " + evt.target.error);
     }
     else {
+      lmVideoCapture.log("push b64 chunk...");
       base64Chunks.push(evt.target.result);
     }
     if( end < fileSize ) {
       start =end;
       readChunk(file);
+      lmVideoCapture.log("read next chunk...");
     }
     else {
       console.info('~' + ( base64Chunks.length / 10 ) + 'MB - ' + base64Chunks.length + ' (100 kb) chunks');
+      lmVideoCapture.log('~' + (base64Chunks.length / 10) + 'MB - ' + base64Chunks.length + ' (100 kb) chunks');
       var content =_videoCapture.reassembleChunkedDataURL(base64Chunks);
       callback(content);
     }
