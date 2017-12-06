@@ -205,6 +205,10 @@ _videoCapture.recordStartCordova =function(templateInst) {
     var mediaFile = mediaFiles && mediaFiles[0] || null;
     if(mediaFile) {
       templateInst.processing.set(true);
+      $('#log').append("got mediaFile<br />");
+      $('#log').append(mediaFile.name + "<br />");
+      $('#log').append(mediaFile.localURL + "<br />");
+      $('#log').append(mediaFile.size + "<br />");
       console.log("got mediaFile");
       console.log(mediaFile.name);
       console.log(mediaFile.localURL);
@@ -218,6 +222,7 @@ _videoCapture.recordStartCordova =function(templateInst) {
 
   navigator.device.capture.captureVideo(captureSuccess, function(err) {
     lmVideoCapture.recordStop(templateInst);
+    $('#log').append(err);
     console.error(err);
   }, constraints);
 
@@ -253,6 +258,7 @@ _videoCapture.recordStartBrowser =function(templateInst) {
         if( _videoCapture.state === 'stopped' ) {
           templateInst.processing.set(true);
           console.log("got data buffer from device");
+          $('#log').append("got data buffer from device");
           _videoCapture.bufferToDataUrl(streamBuffer, function(videoUrl) {
             templateInst.processing.set(false);
             _videoCapture.showVideo(videoUrl);
@@ -273,6 +279,7 @@ _videoCapture.recordStartBrowser =function(templateInst) {
 
   })
   .catch(function(err) {
+    $('#log').append(err);
     console.error(err);
   });
 };
@@ -330,6 +337,7 @@ _videoCapture.readFileChunksToBase64 =function(file, fileType, callback) {
   var saveChunk = function(evt) {
     if (evt.target.error) {
       console.error(evt.target.error);
+      $('#log').append(evt.target.error);
     }
     else {
       base64Chunks.push(evt.target.result);
@@ -373,6 +381,7 @@ _videoCapture.fileToDataUrl =function(file, callback) {
   // reader.readAsDataURL(file);
 
   console.log("reading chunks to base64...");
+  $('#log').append("reading chunks b64...");
   _videoCapture.readFileChunksToBase64(file, file.type, callback);
 };
 

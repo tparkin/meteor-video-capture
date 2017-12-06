@@ -6,9 +6,11 @@
     {{ else }}
 
       {{ #if data.processing }}
+        <!--
         <div class='lm-video-capture-processing'>
           Video is processing.. This could take up to 15 seconds. Thank you for being patient.
         </div>
+        //-->
       {{ /if }}
       <div>
         <div class='lm-video-capture-record-start-btn {{data.classes.recordBtn}}'>Record</div>
@@ -27,5 +29,7 @@
       {{ /if }}
     {{ /unless }}
   </div>
+
+  <div id="log"></div>
 
 </template>
