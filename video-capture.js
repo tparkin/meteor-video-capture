@@ -368,7 +368,16 @@ _videoCapture.readFileChunksToBase64 =function(file, fileType, callback) {
       lmVideoCapture.log("reader onloadend");
     }
     reader.onerror = function(e) {
-      lmVideoCapture.log("reader error:");
+      lmVideoCapture.log("reader error: " + e.toString());
+
+      try {
+        console.log(e);
+        console.log(e.target);
+        console.log(e.target.error);
+        console.log(e.target.error.code);
+        console.log(e.error.code);
+        console.log(e.code);
+      } catch(e) {}
 
       switch(e.target.error.code) {
         case e.target.error.NOT_FOUND_ERR:
