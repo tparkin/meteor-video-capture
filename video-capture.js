@@ -367,9 +367,30 @@ _videoCapture.readFileChunksToBase64 =function(file, fileType, callback) {
     reader.onloadend = function(x) {
       lmVideoCapture.log("reader onloadend");
     }
-    reader.onerror = function(err) {
-      lmVideoCapture.log("reader error: " + err);
+    reader.onerror = function(e) {
+      lmVideoCapture.log("reader error:");
+
+      switch(e.target.error.code) {
+        case e.target.error.NOT_FOUND_ERR:
+          lmVideoCapture.log("File not found!");
+          break;
+        case e.target.error.NOT_READABLE_ERR:
+          lmVideoCapture.log("File not readable!");
+          break;
+        case e.target.error.ABORT_ERR:
+          lmVideoCapture.log("Read operation was aborted!");
+          break; 
+        case e.target.error.SECURITY_ERR:
+          lmVideoCapture.log("File is in a locked state!");
+          break;
+        case e.target.error.ENCODING_ERR:
+          lmVideoCapture.log("The file is too long to encode in a data:// URL");
+          break;
+        default:
+          lmVideoCapture.log("Read error");
+      }
     }
+
     reader.readAsDataURL(blob);
   };
 
